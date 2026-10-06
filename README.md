@@ -2,6 +2,8 @@
 
 Full-stack quiz creation app: create quizzes, list them, view details, and delete them.
 
+Preview: [https://nadiaturko.github.io/quiz-builder/](https://nadiaturko.github.io/quiz-builder/)
+
 ![Quiz list](docs/screenshots/quizzes-list.png)
 
 ## Stack

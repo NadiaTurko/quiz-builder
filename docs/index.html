@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Quiz Builder</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Outfit:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --background: #fdfaf5;
+        --foreground: #3c2f2f;
+        --muted: #6b5b52;
+        --line: #e8ddd0;
+        --accent: #8b3a3a;
+        --parchment: #f3ebe0;
+        --shadow: 0 8px 30px #3c2f2f0f;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        color: var(--foreground);
+        font-family: Outfit, ui-sans-serif, system-ui, sans-serif;
+        background:
+          radial-gradient(80% 50% at 10% -10%, #f0ddd88c, transparent 55%),
+          radial-gradient(60% 40% at 90% 0, #dfe6dc66, transparent 50%),
+          linear-gradient(#fdfaf5, #f7f1e8);
+      }
+
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        border-bottom: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
+        background: color-mix(in srgb, var(--background) 90%, transparent);
+        backdrop-filter: blur(16px);
+      }
+
+      .wrap {
+        max-width: 56rem;
+        margin: 0 auto;
+        padding: 0 1rem;
+      }
+
+      .nav {
+        display: flex;
+        height: 72px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .mark {
+        display: flex;
+        width: 2.5rem;
+        height: 2.5rem;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0.75rem;
+        background: var(--accent);
+        color: white;
+        font-size: 0.875rem;
+        font-weight: 700;
+      }
+
+      .brand strong {
+        display: block;
+        font-family: Fraunces, Georgia, serif;
+        font-size: 1.125rem;
+      }
+
+      .brand span {
+        display: none;
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      @media (min-width: 640px) {
+        .brand span {
+          display: block;
+        }
+      }
+
+      .btn {
+        display: inline-flex;
+        min-height: 2.75rem;
+        align-items: center;
+        justify-content: center;
+        border-radius: 999px;
+        padding: 0 1.25rem;
+        background: var(--accent);
+        color: white;
+        font-size: 0.875rem;
+        font-weight: 600;
+        text-decoration: none;
+      }
+
+      .btn-ghost {
+        background: transparent;
+        color: var(--muted);
+      }
+
+      main {
+        padding: 2.5rem 0 4rem;
+      }
+
+      h1,
+      h2 {
+        font-family: Fraunces, Georgia, serif;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(1.75rem, 4vw, 2.5rem);
+      }
+
+      .lede {
+        margin: 0.75rem 0 0;
+        max-width: 40rem;
+        color: var(--muted);
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 1.5rem;
+      }
+
+      .shots {
+        display: grid;
+        gap: 1.25rem;
+        margin-top: 2.5rem;
+      }
+
+      figure {
+        margin: 0;
+        padding: 0.75rem;
+        border: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
+        border-radius: 22px;
+        background: color-mix(in srgb, white 72%, var(--parchment));
+        box-shadow: var(--shadow);
+      }
+
+      figure img {
+        display: block;
+        width: 100%;
+        border-radius: 16px;
+      }
+
+      figcaption {
+        margin-top: 0.75rem;
+        padding: 0 0.25rem 0.25rem;
+        font-size: 0.875rem;
+        color: var(--muted);
+      }
+
+      .note {
+        margin-top: 2rem;
+        padding: 1.25rem 1.5rem;
+        border: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
+        border-radius: 22px;
+        background: color-mix(in srgb, white 72%, var(--parchment));
+        color: var(--muted);
+        font-size: 0.95rem;
+        line-height: 1.5;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="wrap nav">
+        <a class="brand" href="./">
+          <span class="mark">Q</span>
+          <span>
+            <strong>Quiz Builder</strong>
+            <span>Quiz library</span>
+          </span>
+        </a>
+        <a class="btn" href="https://github.com/NadiaTurko/quiz-builder">GitHub</a>
+      </div>
+    </header>
+    <main class="wrap">
+      <h1>Create, list, preview, and delete quizzes</h1>
+      <p class="lede">
+        Full-stack assessment app: Next.js frontend, Express API, Prisma and SQLite. Details pages
+        are read-only previews of quiz structure.
+      </p>
+      <div class="actions">
+        <a class="btn" href="https://github.com/NadiaTurko/quiz-builder#setup">Run locally</a>
+        <a class="btn btn-ghost" href="https://github.com/NadiaTurko/quiz-builder">Source</a>
+      </div>
+      <section class="shots" aria-label="Screenshots">
+        <figure>
+          <img src="./screenshots/quizzes-list.png" alt="Quizzes list with delete icons" />
+          <figcaption>List quizzes and delete from the shelf.</figcaption>
+        </figure>
+        <figure>
+          <img src="./screenshots/create-quiz.png" alt="Create quiz form with true or false question" />
+          <figcaption>Create a quiz with true/false, short text, or multiple-choice questions.</figcaption>
+        </figure>
+        <figure>
+          <img src="./screenshots/quiz-details.png" alt="Read-only quiz details" />
+          <figcaption>Quiz details are a read-only view of questions and answer options.</figcaption>
+        </figure>
+      </section>
+      <p class="note">
+        GitHub Pages hosts this preview only. The working app needs the Express API and SQLite
+        database — clone the repo and follow the README to start frontend and backend locally.
+      </p>
+    </main>
+  </body>
+</html>
