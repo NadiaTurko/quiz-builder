@@ -1,5 +1,5 @@
-import { redirect } from "next/navigation";
+import { QuizzesList } from "@/components/quiz/QuizzesList";
 
 export default function HomePage() {
-  redirect("/quizzes");
+  return <QuizzesList />;
 }

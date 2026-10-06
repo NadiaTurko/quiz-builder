@@ -8,6 +8,7 @@ import { Button, fieldClass, labelClass, panelClass } from "@/components/ui/Butt
 import { FieldError } from "@/components/ui/FieldError";
 import { EmptyState, ErrorState, Spinner } from "@/components/ui/Status";
 import { createQuiz } from "@/lib/api";
+import { quizDetailHref } from "@/lib/paths";
 import { createEmptyQuestion, quizFormSchema, toCreateQuizPayload } from "@/lib/quizSchema";
 import type { QuizFormValues } from "@/lib/types";
 import { QuestionForm } from "./QuestionForm";
@@ -34,7 +35,7 @@ export function QuizForm() {
 
     try {
       const quiz = await createQuiz(toCreateQuizPayload(values));
-      router.push(`/quizzes/${quiz.id}`);
+      router.push(quizDetailHref(quiz.id));
       router.refresh();
     } catch (error) {
       setSubmitError(error instanceof Error ? error.message : "Failed to create quiz");

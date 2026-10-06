@@ -4,6 +4,8 @@ Full-stack quiz creation app: create quizzes, list them, view details, and delet
 
 Preview: [https://nadiaturko.github.io/quiz-builder/](https://nadiaturko.github.io/quiz-builder/)
 
+The GitHub Pages demo runs in the browser (quizzes are stored in `localStorage`). The Express + Prisma API is used when you run the app locally.
+
 ![Quiz list](docs/screenshots/quizzes-list.png)
 
 ## Stack

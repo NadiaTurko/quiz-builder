@@ -1,4 +1,12 @@
 import type { ApiErrorBody, CreateQuizPayload, QuizDetail, QuizSummary } from "./types";
+import {
+  createLocalQuiz,
+  deleteLocalQuiz,
+  getLocalQuiz,
+  listLocalQuizzes,
+  notifyQuizStore,
+} from "./localStore";
+import { isStaticDemo } from "./paths";
 
 function apiBase(): string {
   if (typeof window === "undefined") {
@@ -32,6 +40,10 @@ async function readError(response: Response): Promise<string> {
 }
 
 export async function getQuizzes(): Promise<QuizSummary[]> {
+  if (isStaticDemo) {
+    return listLocalQuizzes();
+  }
+
   const response = await apiFetch(`${apiBase()}/quizzes`, { cache: "no-store" });
 
   if (!response.ok) {
@@ -42,6 +54,10 @@ export async function getQuizzes(): Promise<QuizSummary[]> {
 }
 
 export async function getQuiz(id: string): Promise<QuizDetail | null> {
+  if (isStaticDemo) {
+    return getLocalQuiz(id);
+  }
+
   const response = await apiFetch(`${apiBase()}/quizzes/${id}`, { cache: "no-store" });
 
   if (response.status === 404) {
@@ -56,6 +72,10 @@ export async function getQuiz(id: string): Promise<QuizDetail | null> {
 }
 
 export async function createQuiz(payload: CreateQuizPayload): Promise<QuizDetail> {
+  if (isStaticDemo) {
+    return createLocalQuiz(payload);
+  }
+
   const response = await apiFetch(`${apiBase()}/quizzes`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -66,10 +86,17 @@ export async function createQuiz(payload: CreateQuizPayload): Promise<QuizDetail
     throw new Error(await readError(response));
   }
 
-  return response.json();
+  const quiz = (await response.json()) as QuizDetail;
+  notifyQuizStore();
+  return quiz;
 }
 
 export async function deleteQuiz(id: string): Promise<void> {
+  if (isStaticDemo) {
+    await deleteLocalQuiz(id);
+    return;
+  }
+
   const response = await apiFetch(`${apiBase()}/quizzes/${id}`, {
     method: "DELETE",
   });
@@ -77,4 +104,6 @@ export async function deleteQuiz(id: string): Promise<void> {
   if (!response.ok) {
     throw new Error(await readError(response));
   }
+
+  notifyQuizStore();
 }
