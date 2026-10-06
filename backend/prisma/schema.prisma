@@ -1,0 +1,71 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum QuestionType {
+  BOOLEAN
+  INPUT
+  CHECKBOX
+}
+
+model Quiz {
+  id        String     @id @default(uuid())
+  title     String
+  createdAt DateTime   @default(now())
+  questions Question[]
+  attempts  Attempt[]
+}
+
+model Question {
+  id             String          @id @default(uuid())
+  quizId         String
+  quiz           Quiz            @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  text           String
+  type           QuestionType
+  correctAnswer  String?
+  position       Int
+  options        AnswerOption[]
+  attemptAnswers AttemptAnswer[]
+
+  @@index([quizId])
+}
+
+model AnswerOption {
+  id         String   @id @default(uuid())
+  questionId String
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  text       String
+  isCorrect  Boolean  @default(false)
+  position   Int
+
+  @@index([questionId])
+}
+
+model Attempt {
+  id        String          @id @default(uuid())
+  quizId    String
+  quiz      Quiz            @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  createdAt DateTime        @default(now())
+  answers   AttemptAnswer[]
+
+  @@index([quizId])
+}
+
+model AttemptAnswer {
+  id         String   @id @default(uuid())
+  attemptId  String
+  attempt    Attempt  @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  questionId String
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  value      String
+  isCorrect  Boolean
+
+  @@unique([attemptId, questionId])
+  @@index([attemptId])
+  @@index([questionId])
+}
